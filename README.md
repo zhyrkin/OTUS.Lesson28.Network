@@ -25,6 +25,8 @@
 - 192.168.0.64/26    - wifi
 
 Теоретическая часть:
+![image](https://github.com/user-attachments/assets/3cb24d2c-49c7-4281-82e3-232b73850ab5)  
+
 свободные сети:
 192.168.0.16/28
 192.168.0.48/28
@@ -41,7 +43,7 @@
 
 Запускаем плейбук netowrk.yml и ждем пока он отработает
 Далее с роутера inetrouter подключаемся через ssh к нашим серверам и проверяем доступность google-dns
-
+```
 zhurkin@centralserver:~$ ping 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=1 ttl=103 time=23.9 ms
@@ -82,3 +84,4 @@ PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 --- 8.8.8.8 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1002ms
 rtt min/avg/max/mdev = 24.111/24.228/24.346/0.117 ms
+```
