@@ -1,0 +1,15 @@
+---
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    
+- name: install iptables
+  ansible.builtin.apt:
+    name: iptables
+    state: latest
+
+- name: install iptables-persistent
+  ansible.builtin.apt:
+    name: iptables-persistent
+    state: latest

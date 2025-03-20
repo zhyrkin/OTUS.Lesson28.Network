@@ -1,0 +1,12 @@
+---
+- name: install ping
+  ansible.builtin.apt:
+    name: iputils-ping
+
+- name: install trace
+  ansible.builtin.apt:
+    name: traceroute
+
+- name: install tcpdump
+  ansible.builtin.apt:
+    name: tcpdump

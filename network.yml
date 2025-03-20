@@ -1,0 +1,72 @@
+---
+- name: Lesson 28. Network
+  hosts: all
+  gather_facts: True
+
+  vars:
+    def_gw: 10.200.3.1
+
+  pre_tasks:
+    - name: Rename hostanme
+      ansible.builtin.hostname:
+        name: '{{ inventory_hostname }}'
+        use: systemd
+
+  roles:
+    - install_iptables
+    - install_utils
+
+  post_tasks:
+    - name: create iptables for inetrouter
+      ansible.builtin.template:
+        src: iptables
+        dest: /etc/iptables/rules.v4
+      when: ansible_hostname == "inetrouter"
+
+    - name: restore iptables
+      community.general.iptables_state:
+        state: restored
+        path: /etc/iptables/rules.v4
+      when: ansible_hostname == "inetrouter"
+    
+
+    - name: config net.ipv4.conf
+      ansible.posix.sysctl:
+        name: net.ipv4.conf.all.forwarding
+        value: '1'
+        state: present
+        sysctl_set: true
+        reload: true
+      when: "'routers' in group_names"
+
+
+
+    - name: disable default route
+      ansible.builtin.template: 
+        src: 00-installer-config.yaml
+        dest: /etc/netplan/00-installer-config.yaml
+        owner: root
+        group: root
+        mode: 0600
+      when: (ansible_hostname != "inetrouter") 
+    
+    - name: start netplan
+      shell: netplan apply
+      when: (ansible_hostname != "inetrouter")
+
+
+    - name: add netplan template
+      template: 
+        src: "50-vagrant_{{ansible_hostname}}.yml"
+        dest: /etc/netplan/50-vagrant.yaml
+        owner: root
+        group: root
+        mode: 0600
+        
+    - name: start netplan
+      shell: netplan apply
+
+    - name: remove defautl gw
+      shell: "ip route del 0.0.0.0/0 via {{ def_gw }}"
+      when: (ansible_hostname != "inetrouter")
+    
