@@ -1,12 +1,12 @@
 # OTUS.Lesson28.Network
 Архитектура сетей
 
-Тестовый стенд 7 VM (2CPU, 2Gb RAM, 6Gb HDD, OS Ubuntu 24.04s)
+Тестовый стенд 7 VM (2CPU, 2Gb RAM, 6Gb HDD, OS Ubuntu 24.04)
 
 
 Домашнее задание:
 
-1. Скачать и развернуть Vagrant-стенд https://github.com/erlong15/otus-linux/tree/network
+1. Скачать и развернуть Vagrant-стенд
 2. Построить следующую сетевую архитектуру:
 Сеть office1
 - 192.168.2.0/26      - dev
